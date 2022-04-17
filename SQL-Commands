@@ -1,0 +1,81 @@
+Mohammad Nasser Altayyar
+m.altaiyar2030@gmail.com
+
+# DDL - Create
+create database stor;
+create table countries(
+    code int primary key ,
+    name varchar(20) UNIQE,
+    continent_name varchar(20) NOT NULL ,
+    password varchar(25) ,
+    role varchar(10) check(role='admin' or role='user')
+);
+create table users (
+    id int primary key ,
+    full_name varchar(20)
+    email varchar(20) UNIQE ,
+    gender char(1) CHECK (gender='m' AND gender='f') ,
+    date_of_birth varchar(15)
+    created_at DATETIME ,
+    country_code int ,
+    foreign key (country_code) references countries(code) 
+);
+create table orders(
+    id int primary key ,
+    user_id int ,
+    status  varchar(6) ,
+    created_at DATETIME ,
+    CONRTAINT CHK_status CHECK status BETWEEN 'start' OR 'finish' 
+    foreign key (user_id) references users(id)
+);
+create table order_products(
+    order_id int ,
+    product_id int ,
+    quantity int ,
+    foreign key (order_id) references orders(id)
+    foreign key (product_id) references products(id)
+);
+create table products(
+    id int primary key ,
+    name varchar(10) NOT NULL ,
+    price int ,
+    status  varchar(10) ,
+    created_at DATETIME ,
+    CONRTAINT CHK_status CHECK status BETWEEN 'valid' OR 'expired' 
+
+);
+
+
+# DDL - Alter
+alter table countries add column city varchar(15);
+alter table users add column phone_number int(10);
+alter table orders add column type varchar(15);
+alter table products add column tag varchar(10);
+alter table order_products add column name varchar(10);
+
+
+
+# DQL - Select
+select * from countries;
+select * from users;
+select * from orders;
+select * from order_products;
+select * from products;
+
+
+# DML - Insert
+insert into countries values (1,'saudi arabia','Aisa');
+insert into users values (1,'mohammad altayyar','m.altaiyar2030@gmail.com','m','1992/02/22','2022/04/17', 1);
+insert into orders values (1,'2' , 'valid' , '2022/04/17');
+insert into order_products values (1 , 1 , 10 );
+insert into products values (1, 'phone', 'valid','2022/04/17');
+
+# DML - Update
+update countries set name='Hail City' where id='1';
+
+# DML - Delete
+DELETE FROM products WHARE id='1';
+
+
+
+
